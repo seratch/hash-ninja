@@ -3,31 +3,23 @@
 require 'hash_ninja'
 
 describe HashNinja::ActiveHash do
-  it 'should has #underscore_keys! (String keys)' do
-    hash = {'somethingLikeThat' => 'aaa', 'YetAnotherSomething' => {'NestedKey' => 'ccc'}}
-    hash.extend_active_hash!.underscore_keys!
-    hash['something_like_that'].should eq('aaa')
-    hash['yet_another_something'].should eq({'NestedKey' => 'ccc'})
+
+  it 'should have #underscore_keys!' do
+    hash = {:rubyOnRails => 'xxx', 'ProgrammingRuby' => {'RubyGems' => 'yyy'}}
+    hash.activate!.underscore_keys!
+
+    hash[:ruby_on_rails].should eq('xxx')
+    hash['programming_ruby'].should eq({'RubyGems' => 'yyy'})
   end
-  it 'should has #underscore_keys! (Symbol keys)' do
-    hash = {:somethingLikeThat => 'aaa', :YetAnotherSomething => {:NestedKey => 'ccc'}}
-    hash.extend_active_hash!.underscore_keys!
-    hash[:something_like_that].should eq('aaa')
-    hash[:yet_another_something].should eq({:NestedKey => 'ccc'})
+
+  it 'should have #recursively_underscore_keys!' do
+    hash = {:rubyOnRails => 'aaa', 'ProgrammingRuby' => {:RubyGems => 'bbb', 'rubyMine' => 'ccc'}}
+    hash.activate!.recursively_underscore_keys!
+
+    hash[:ruby_on_rails].should eq('aaa')
+    hash['programming_ruby'].should eq({:ruby_gems => 'bbb', 'ruby_mine' => 'ccc'})
+    hash['programming_ruby'][:ruby_gems].should eq('bbb')
+    hash['programming_ruby']['ruby_mine'].should eq('ccc')
   end
-  it 'should has #recursively_underscore_keys! (Symbol keys)' do
-    hash = {:somethingLikeThat => 'aaa', :YetAnotherSomething => {:NestedKey => 'ccc'}}
-    hash.extend_active_hash!.recursively_underscore_keys!
-    hash[:something_like_that].should eq('aaa')
-    hash[:yet_another_something].should eq({:nested_key => 'ccc'})
-  end
-  it 'should has #recursively_underscore_keys! (Symbol keys)' do
-    hash = {
-        :somethingLikeThat => 'aaa',
-        :YetAnotherSomething => [{:NestedKey1 => 'ccc'}, {:NestedKey2 => 'ddd'}]
-    }
-    hash.extend_active_hash!.recursively_underscore_keys!
-    hash[:something_like_that].should eq('aaa')
-    hash[:yet_another_something].should eq([{:nested_key1 => 'ccc'}, {:nested_key2 => 'ddd'}])
-  end
+
 end

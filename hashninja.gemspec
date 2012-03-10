@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = HashNinja::VERSION
   s.authors     = ["Kazuhiro Sera"]
   s.email       = ["seratch@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/seratch/hash-ninja"
   s.summary     = %q{Hash toolkit for Ruby ninja}
   s.description = %q{Hash toolkit for Ruby ninja}
 
