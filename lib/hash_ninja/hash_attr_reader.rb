@@ -2,12 +2,12 @@
 
 module HashNinja
 
-  # Accessor which provides accessor methods (named as same as Hash key) for Hash object
+  # Provides attr_reader Hash data
   # ==== Examples
-  #   member = {'name'=>'Andy', 'type' => { 'id' => 999, 'name' => 'Guest' }}.to_hash_accessor
+  #   member = {'name'=>'Andy', 'type' => { 'id' => 999, 'name' => 'Guest' }}.to_attr_reader
   #   member.name # => 'Andy'
   #   member.type.id # => 999
-  class HashAccessor
+  class HashAttrReader
     # target Hash object
     attr_reader :hash
 
@@ -21,7 +21,7 @@ module HashNinja
       found = @hash[name] || @hash[name.to_s]
       if found
         if found.is_a? Hash
-          found.to_hash_accessor
+          found.to_attr_reader
         else
           found
         end

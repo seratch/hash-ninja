@@ -83,5 +83,4 @@ describe Hash do
     hash[:LastName].should eq('Torvalds')
   end
 
-
 end

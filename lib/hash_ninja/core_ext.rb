@@ -17,8 +17,8 @@ class Hash
   end
 
   # Provides HashNinja::HashAccessor object
-  def to_hash_accessor
-    HashNinja::HashAccessor.new(self)
+  def to_attr_reader
+    HashNinja::HashAttrReader.new(self)
   end
 
   # Creates Hash object which contains the readable instance variables of 'obj'.
