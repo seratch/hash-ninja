@@ -110,7 +110,7 @@ end
 class Array
   def method_missing(name, *args, &block)
     # for ActiveHash#recursively_xxx
-    if name.match(/recursively_/) then
+    if name.match(/recursively_/)
       method_name = name.to_s.sub(/^recursively_/, '')
       self.each do |value|
         if value.is_a? Hash
