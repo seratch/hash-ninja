@@ -91,13 +91,13 @@ module HashNinja
       # provides 'recursively_xxx' methods
       if name.match(/recursively_/)
         method_name = name.to_s.sub(/^recursively_/, '')
-        self.send(method_name, *args, &block)
+        self.public_send(method_name, *args, &block)
         self.values.each do |value|
           if value.is_a? Hash
             value.extend HashNinja::ActiveHash
-            value.send(name, *args, &block)
+            value.public_send(name, *args, &block)
           elsif value.is_a? Array
-            value.send(name, *args, &block)
+            value.public_send(name, *args, &block)
           end
         end
         self
@@ -115,9 +115,9 @@ class Array
       self.each do |value|
         if value.is_a? Hash
           value.extend HashNinja::ActiveHash
-          value.send(name, *args, &block)
+          value.public_send(name, *args, &block)
         elsif value.is_a? Array
-          value.send(name, *args, &block)
+          value.public_send(name, *args, &block)
         end
       end
       self
