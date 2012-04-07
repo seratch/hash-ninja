@@ -5,6 +5,32 @@ require 'hash_ninja'
 
 describe HashNinja do
 
+  it 'should work with simple hash values' do
+
+    name = {'fullName' => {'firstName' => 'Linus', 'lastName' => 'Torvalds'}}
+    name['fullName']['firstName'].should eq('Linus')
+    name['fullName']['lastName'].should eq('Torvalds')
+
+    name.activate!
+    # => {"fullName"=>{"firstName"=>"Linus", "lastName"=>"Torvalds"}}
+
+    name.recursively_underscore_keys!
+    # => {"full_name"=>{"first_name"=>"Linus", "last_name"=>"Torvalds"}}
+    name['full_name']['first_name'].should eq('Linus')
+    name['full_name']['last_name'].should eq('Torvalds')
+
+    name.recursively_symbolize_keys!
+    # => {:full_name=>{:first_name=>"Linus", :last_name=>"Torvalds"}}
+    name[:full_name][:first_name].should eq('Linus')
+    name[:full_name][:last_name].should eq('Torvalds')
+
+    name_attr = name.to_attr_reader
+    # => #<HashNinja::HashAttrReader:0x007fa05387b748 @hash={:full_name=>{:first_name=>"Linus", :last_name=>"Torvalds"}}>
+    name_attr.full_name.first_name.should eq('Linus')
+    name_attr.full_name.last_name.should eq('Torvalds')
+
+  end
+
   it 'should work with the Google+ API example data' do
     google_plus_api_example = <<JSON
 {
